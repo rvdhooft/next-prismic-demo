@@ -237,7 +237,47 @@ interface SettingsDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type SettingsDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
-export type AllDocumentTypes = ArticleDocument | NavigationDocument | PageDocument | SettingsDocument;
+/** Content for Spotlight documents */
+interface SpotlightDocumentData {
+    /**
+     * Image field in *Spotlight*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: spotlight.image
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    image: prismicT.ImageField<never>;
+    /**
+     * Slice Zone field in *Spotlight*
+     *
+     * - **Field Type**: Slice Zone
+     * - **Placeholder**: *None*
+     * - **API ID Path**: spotlight.slices[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+     *
+     */
+    slices: prismicT.SliceZone<SpotlightDocumentDataSlicesSlice>;
+}
+/**
+ * Slice for *Spotlight → Slice Zone*
+ *
+ */
+type SpotlightDocumentDataSlicesSlice = TitleAndTextSlice;
+/**
+ * Spotlight document from Prismic
+ *
+ * - **API ID**: `spotlight`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SpotlightDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<SpotlightDocumentData>, "spotlight", Lang>;
+export type AllDocumentTypes = ArticleDocument | NavigationDocument | PageDocument | SettingsDocument | SpotlightDocument;
 /**
  * Default variation for ContactForm Slice
  *
@@ -433,11 +473,90 @@ type TextSliceVariation = TextSliceDefault;
  *
  */
 export type TextSlice = prismicT.SharedSlice<"text", TextSliceVariation>;
+/**
+ * Primary content in TitleAndText → Primary
+ *
+ */
+interface TitleAndTextSliceDefaultPrimary {
+    /**
+     * Title field in *TitleAndText → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: title_and_text.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Subtitle field in *TitleAndText → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: title_and_text.primary.subtitle
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    subtitle: prismicT.RichTextField;
+    /**
+     * Description field in *TitleAndText → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your feature
+     * - **API ID Path**: title_and_text.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField;
+    /**
+     * CTA Text field in *TitleAndText → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: title_and_text.primary.cta_text
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    cta_text: prismicT.KeyTextField;
+    /**
+     * CTA Link field in *TitleAndText → Primary*
+     *
+     * - **Field Type**: Link
+     * - **Placeholder**: *None*
+     * - **API ID Path**: title_and_text.primary.cta_link
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    cta_link: prismicT.LinkField;
+}
+/**
+ * Default variation for TitleAndText Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `TitleAndText`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type TitleAndTextSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<TitleAndTextSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *TitleAndText*
+ *
+ */
+type TitleAndTextSliceVariation = TitleAndTextSliceDefault;
+/**
+ * TitleAndText Shared Slice
+ *
+ * - **API ID**: `title_and_text`
+ * - **Description**: `TitleAndText`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type TitleAndTextSlice = prismicT.SharedSlice<"title_and_text", TitleAndTextSliceVariation>;
 declare module "@prismicio/client" {
     interface CreateClient {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { ArticleDocumentData, ArticleDocumentDataSlicesSlice, ArticleDocument, NavigationDocumentData, NavigationDocumentDataLinksItem, NavigationDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, SettingsDocumentData, SettingsDocument, AllDocumentTypes, ContactFormSliceDefault, ContactFormSliceVariation, ContactFormSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceWidePrimary, ImageSliceWide, ImageSliceVariation, ImageSlice, QuoteSliceDefaultPrimary, QuoteSliceDefault, QuoteSliceVariation, QuoteSlice, TextSliceDefaultPrimary, TextSliceDefault, TextSliceVariation, TextSlice };
+        export type { ArticleDocumentData, ArticleDocumentDataSlicesSlice, ArticleDocument, NavigationDocumentData, NavigationDocumentDataLinksItem, NavigationDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, SettingsDocumentData, SettingsDocument, SpotlightDocumentData, SpotlightDocumentDataSlicesSlice, SpotlightDocument, AllDocumentTypes, ContactFormSliceDefault, ContactFormSliceVariation, ContactFormSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceWidePrimary, ImageSliceWide, ImageSliceVariation, ImageSlice, QuoteSliceDefaultPrimary, QuoteSliceDefault, QuoteSliceVariation, QuoteSlice, TextSliceDefaultPrimary, TextSliceDefault, TextSliceVariation, TextSlice, TitleAndTextSliceDefaultPrimary, TitleAndTextSliceDefault, TitleAndTextSliceVariation, TitleAndTextSlice };
     }
 }

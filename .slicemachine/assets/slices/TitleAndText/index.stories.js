@@ -1,0 +1,9 @@
+import MyComponent from '../../../../slices/TitleAndText';
+
+export default {
+  title: 'slices/TitleAndText'
+}
+
+
+export const _Default = () => <MyComponent slice={{"variation":"default","version":"sktwi1xtmkfgx8626","items":[{}],"primary":{"title":[{"type":"heading1","text":"Finally","spans":[]}],"subtitle":[{"type":"paragraph","text":"Non adipisicing officia laborum eu est non officia est Lorem nostrud. Ex mollit et culpa consequat sint sunt magna occaecat minim sint anim.","spans":[]}],"description":[{"type":"paragraph","text":"Excepteur voluptate reprehenderit consectetur. Aute est elit reprehenderit occaecat sunt elit cupidatat eu. Occaecat culpa eiusmod veniam quis quis in pariatur nostrud sit id Lorem fugiat incididunt officia.","spans":[]}],"cta_text":"sea","cta_link":{"link_type":"Web","url":"http://google.com"}},"slice_type":"title_and_text","id":"_Default"}} />
+_Default.storyName = ''

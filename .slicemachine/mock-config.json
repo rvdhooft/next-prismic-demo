@@ -57,7 +57,8 @@
           "blocks": 1
         }
       }
-    }
+    },
+    "spotlight": {}
   },
   "slices": {
     "Text": {
@@ -109,6 +110,18 @@
     "ContactForm": {
       "default": {
         "primary": {}
+      }
+    },
+    "TitleAndText": {
+      "default": {
+        "primary": {
+          "description": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        }
       }
     }
   }

@@ -7,6 +7,7 @@ import { createClient } from "../prismicio";
 import { Layout } from "../components/Layout";
 import { Bounded } from "../components/Bounded";
 import { Heading } from "../components/Heading";
+import { Spotlight } from "../components/Spotlight";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -79,16 +80,19 @@ const Article = ({ article }) => {
   );
 };
 
-const Index = ({ articles, navigation, settings }) => {
+const Index = ({ articles, navigation, settings, spotlight }) => {
+  console.log(spotlight);
   return (
     <Layout
       withHeaderDivider={false}
       navigation={navigation}
       settings={settings}
+      withProfile={false}
     >
       <Head>
         <title>{prismicH.asText(settings.data.name)}</title>
       </Head>
+      <Spotlight {...spotlight.data} />
       <Bounded size="widest">
         <ul className="grid grid-cols-1 gap-16">
           {articles.map((article) => (
@@ -113,12 +117,14 @@ export async function getStaticProps({ previewData }) {
   });
   const navigation = await client.getSingle("navigation");
   const settings = await client.getSingle("settings");
+  const spotlight = await client.getSingle("spotlight");
 
   return {
     props: {
       articles,
       navigation,
       settings,
+      spotlight,
     },
   };
 }
